@@ -8,7 +8,7 @@ interface ChatResponse {
   response: string;
 }
 
-interface StudentStatistics {
+export interface StudentStatistics {
   summary: {
     total_students: number;
   };
