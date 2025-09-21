@@ -85,7 +85,7 @@ export function ChatComponent() {
   };
 
   return (
-    <Card className="flex flex-col h-[calc(100vh-10rem)] max-w-3xl mx-auto">
+    <Card className="flex flex-col h-full w-full">
       <CardHeader className="flex flex-row items-center justify-between pb-3">
         <CardTitle className="text-2xl font-bold">Chat with Campus Agent</CardTitle>
         <div className="flex items-center space-x-2">
