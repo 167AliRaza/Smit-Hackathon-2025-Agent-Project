@@ -99,7 +99,9 @@ export async function chatAgentStream(
 }
 
 export async function getStudentStatistics(): Promise<StudentStatistics> {
-  const response = await fetch(`${BASE_URL}/analytics/student-statistics`);
+  const response = await fetch(`${BASE_URL}/analytics/student-statistics`, {
+    cache: 'no-store', // Ensure fresh data is always fetched
+  });
 
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
