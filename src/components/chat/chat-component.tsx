@@ -110,7 +110,7 @@ export function ChatComponent() {
               <div
                 key={index}
                 className={cn(
-                  "flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm",
+                  "flex w-full max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm break-words", // Added w-full and break-words
                   message.role === "user"
                     ? "ml-auto bg-primary text-primary-foreground"
                     : "bg-muted"
@@ -120,7 +120,7 @@ export function ChatComponent() {
               </div>
             ))}
             {isLoading && isStreaming && messages[messages.length - 1]?.role === "agent" && (
-              <div className="flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm bg-muted">
+              <div className="flex w-full max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm bg-muted break-words"> {/* Added w-full and break-words */}
                 <Loader2 className="h-4 w-4 animate-spin" />
               </div>
             )}
