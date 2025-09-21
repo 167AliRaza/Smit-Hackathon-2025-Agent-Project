@@ -1,12 +1,27 @@
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { MadeWithDyad } from "@/components/made-with-dyad";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-1 items-center sm:items-start">
-        <h1>Blank page</h1>
-      </main>
-      <MadeWithDyad />
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-10rem)] p-4 text-center">
+      <h1 className="text-4xl font-bold tracking-tight lg:text-5xl mb-6">
+        Welcome to Campus Admin Agent
+      </h1>
+      <p className="text-lg text-muted-foreground mb-8 max-w-2xl">
+        Interact with the AI agent to get campus information or view student analytics.
+      </p>
+      <div className="flex gap-4">
+        <Button asChild size="lg">
+          <Link href="/chat">Start Chatting</Link>
+        </Button>
+        <Button asChild variant="outline" size="lg">
+          <Link href="/dashboard">View Dashboard</Link>
+        </Button>
+      </div>
+      <div className="absolute bottom-4">
+        <MadeWithDyad />
+      </div>
     </div>
   );
 }
