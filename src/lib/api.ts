@@ -101,6 +101,11 @@ export async function chatAgentStream(
 export async function getStudentStatistics(): Promise<StudentStatistics> {
   const response = await fetch(`${BASE_URL}/analytics/student-statistics`, {
     cache: 'no-store', // Ensure fresh data is always fetched
+    headers: {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    }
   });
 
   if (!response.ok) {

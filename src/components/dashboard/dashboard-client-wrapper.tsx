@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { getStudentStatistics, StudentStatistics } from "@/lib/api";
 import { StudentStatisticsCard } from "@/components/dashboard/student-statistics-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,34 +16,48 @@ export function DashboardClientWrapper({ initialData }: DashboardClientWrapperPr
   const [studentStatistics, setStudentStatistics] = useState<StudentStatistics | null>(initialData);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
+    console.log("🔄 Refreshing student statistics...");
     setIsLoading(true);
     setError(false);
     try {
       const data = await getStudentStatistics();
+      console.log("✅ Student statistics fetched successfully:", data);
       setStudentStatistics(data);
+      setLastUpdated(new Date());
       toast.success("Student statistics refreshed!");
     } catch (e) {
-      console.error("Failed to fetch student statistics:", e);
+      console.error("❌ Failed to fetch student statistics:", e);
       setError(true);
       toast.error("Failed to refresh student statistics.");
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   // If initialData is null (e.g., server-side fetch failed), try fetching on client mount
   useEffect(() => {
     if (!initialData) {
       fetchStats();
+    } else {
+      // Set initial load time if we have data from server
+      setLastUpdated(new Date());
     }
-  }, [initialData]);
+  }, [initialData, fetchStats]);
 
   return (
     <div className="flex flex-1 flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Analytics Dashboard</h1>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Analytics Dashboard</h1>
+          {lastUpdated && (
+            <p className="text-sm text-muted-foreground mt-1">
+              Last updated: {lastUpdated.toLocaleTimeString()}
+            </p>
+          )}
+        </div>
         <Button onClick={fetchStats} disabled={isLoading} variant="outline" size="sm">
           {isLoading ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
